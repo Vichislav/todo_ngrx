@@ -1,5 +1,6 @@
 import {state} from "@angular/animations";
 import {Todo} from "../model/todo";
+import {TodoActions, todoActionsType} from "./todo.actions";
 
 export const TODO_REDUCER_NODE = 'todo';
 
@@ -15,6 +16,27 @@ const initialState: TodoState = {
 };
 
 // @ts-ignore ругался на action
-export const todoReducer = (state = initialState, action) => {
-  return state;
+export const todoReducer = (state = initialState, action: TodoActions) => {
+  //делаем проверку type
+  switch (action.type) {
+    //в случае если type 'равен' create
+    case todoActionsType.create:
+      return {
+        //мы должны вернуть новый state скопированный из оригинального
+        ...state,
+        idIncrement: state.idIncrement + 1, //увеличили id
+        //создаем объект тодо
+        todoList: [
+          ...state.todoList, // копируем старый массив и добавалем туда новый элемент
+          {
+            id: state.idIncrement,  // поля нового элемента
+            name: action.payload.name, // поля нового элемента
+            completed: false // поля нового элемента
+          }
+        ]
+      };
+    default:
+      return state;
+  }
+
 };
