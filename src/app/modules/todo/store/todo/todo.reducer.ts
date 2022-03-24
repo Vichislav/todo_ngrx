@@ -1,5 +1,5 @@
 import {state} from "@angular/animations";
-import {Todo} from "../model/todo";
+import {Todo} from "../../model/todo";
 import {TodoActions, todoActionsType} from "./todo.actions";
 
 export const TODO_REDUCER_NODE = 'todo';
@@ -27,7 +27,7 @@ export const todoReducer = (state = initialState, action: TodoActions) => {
         idIncrement: state.idIncrement + 1, //увеличили id
         //создаем объект тодо
         todoList: [
-          ...state.todoList, // копируем старый массив и добавалем туда новый элемент
+          ...state.todoList, // копируем старый массив кладем его в новый и добавалем туда новый элемент
           {
             id: state.idIncrement,  // поля нового элемента
             name: action.payload.name, // поля нового элемента
