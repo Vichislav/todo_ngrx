@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule} from "@angular/forms";
-import { NgForm } from '@angular/forms';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+
 
 @Component({
   selector: 'app-todo-create-form-ui',
@@ -10,13 +9,19 @@ import { NgForm } from '@angular/forms';
 export class TodoCreateFormUiComponent implements OnInit {
   name = '';
 
+  @Output()
+  create = new EventEmitter<string>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
-  // @ts-ignore
-  onCreate(event) {
-    console.log(this.name);
+
+  onCreate() {
+    if (this.name) { //если оно существует
+     this.create.emit(this.name);
+     this.name = '';
+    }
   }
 
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {TodoState} from "../../store/todo/todo.reducer";
+import {Store} from "@ngrx/store";
+import {TodoCreateAction} from "../../store/todo/todo.actions";
 
 @Component({
   selector: 'app-todo-widget',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoWidgetComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store$: Store<TodoState>) { }
 
   ngOnInit(): void {
+  }
+  onCreate(name: string) {
+    console.log(name);
+    //сообщаем хранилищу через store$ о событии создания тодо с именем name
+    this.store$.dispatch(new TodoCreateAction({name: name}))
   }
 
 }
